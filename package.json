@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./node_modules/nodemon/bin/nodemon.js --watch server.js ./server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derfrodo/square_images.git"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
