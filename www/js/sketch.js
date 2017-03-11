@@ -2,7 +2,7 @@
 Denke beim Zeichnen an die "invertierte" y-Achse
  */
 
-const minDistance = 2;
+const minDistance = 4;
 const growFactor = 0.3;
 
 let fails = 0;
@@ -17,7 +17,7 @@ var img;
 var testPoint;
 
 function preload() {
-    img = loadImage("assets/image600.jpg");
+    img = loadImage("assets/DSC_1586_600.jpg");
 }
 
 function getAverageColor() {
@@ -94,8 +94,7 @@ function goFullScreen() {
 }
 
 function setup() {
-    const factor = img.width / 16;
-    createCanvas(16 * factor, 9 * factor);
+    createCanvas(img.width, img.height);
 
     bColor = getAverageColor();
 
@@ -287,13 +286,13 @@ function Square(posX, posY, angle) {
             let sqr = squares[i];
             if (sqr !== this) {
                 let dist = sqr.pos.dist(this.pos);
-                let nextSize = (this.size + growFactor);
+                let nextSize = (this.size + growFactor) + minDistance;
 
-                if (dist < (sqr.size + nextSize) / 2 + minDistance) {
+                if (dist < (sqr.size + nextSize) / 2) {
                     return false;
                 }
 
-                if (dist < sqrt(2) * (sqr.size + nextSize) + minDistance) {
+                if (dist < sqrt(2) * (sqr.size + nextSize) ) {
                     let noOverlapping = !this.pointIsInSquare(sqr.a(), nextSize) &&
                         !this.pointIsInSquare(sqr.b(), nextSize) &&
                         !this.pointIsInSquare(sqr.c(), nextSize) &&
