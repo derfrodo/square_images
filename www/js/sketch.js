@@ -2,14 +2,13 @@
 Denke beim Zeichnen an die "invertierte" y-Achse
  */
 
-const minDistance = 4;
-const growFactor = 0.3;
+const minDistance = 3;
+const growFactor = 1;
 
 let fails = 0;
-const maxFails = 100;
+const maxFails = 150;
 
 var bColor = 0;
-
 
 var squares = [];
 var img;
@@ -17,11 +16,113 @@ var img;
 var testPoint;
 
 function preload() {
-    img = loadImage("assets/DSC_1586_600.jpg");
+    img = loadImage("assets/DortmundPanorama_600.jpg");
 }
 
+// var sqr;
+
+var s1;
+var s2;
+
+function setup() {
+    createCanvas(img.width, img.height);
+
+    bColor = getAverageColor();
+    addCanvasFullscreenButton();
+}
+
+function draw() {
+    // background(bColor);
+    // testRotatingSquare();
+    //image(img, 0, 0, width,height);
+
+    // if (!s1) {
+    //     s1 = s1 || new Square(100, 150, (1 / 4) * PI);
+    //     s1.size = 35;
+    //     squares.push(s1);
+    // }
+    // if (!s2) {
+    //     s2 = s2 || new Square(100, 100, (4 / 4) * PI);
+    //     s2.size = 35;
+    //     squares.push(s2);
+    // }
+
+    // drawSquare(s1);
+    // drawSquare(s2);
+
+    // s1.grow(squares);
+    // s2.grow(squares);
+
+    fillImage() ;
+}
+
+
+function fillImage() {
+    image(img, 0, 0);
+    background(0, 100);
+
+    let sqr;
+
+    if (fails < maxFails) {
+        for (let i = 0; i < 25; i++) {
+            sqr = new Square(random(0, width), random(0, height), random(0, 2 * PI));
+            if (sqr.canGrow(squares)) {
+                sqr.color = getImageColorAtPoint(img, sqr.pos);
+                squares.push(sqr);
+                fails = 0;
+                // console.log(sqr);
+            }
+            else {
+                fails++;
+            }
+        }
+
+    }
+    else {
+        noLoop();
+        console.log("too many fails");
+    }
+
+    for (let i = 0; i < squares.length; i++) {
+        drawSquare(squares[i]);
+        squares[i].grow(squares);
+    }
+
+    // console.log(`There are ${squares.length} squares`);
+}
+
+
+function testRotatingSquare() {
+    // sqr.angle += 0.01;
+    // drawSquare(sqr);
+
+    // stroke(0, 2);
+    // fill(255, 0, 255);
+    // let a = sqr.a();
+    // let b = sqr.b();
+    // let c = sqr.c();
+    // let d = sqr.d();
+
+    // textSize(24);
+    // text("A", a.x, a.y);
+    // text("B", b.x, b.y);
+    // text("C", c.x, c.y);
+    // text("D", d.x, d.y);
+
+    // // console.log(a);
+    // // console.log(b);
+    // // console.log(c);
+    // // console.log(d);
+
+    // console.log(sqr.pointIsInSquare(testPoint));
+    // ellipse(testPoint.x, testPoint.y, 10);
+
+
+}
+
+
 function getAverageColor() {
-    
+
     img.loadPixels();
     let pixels = img.pixels;
     let pixelCount = floor(pixels.length / 4)
@@ -75,270 +176,5 @@ function getImageColorAtPoint(img, vectorToPoint) {
     let bv = b[0];
     let av = alpha[0];
     return color(rv, gv, bv, av);
-
-}
-
-// var sqr;
-
-function goFullScreen() {
-    let cs = document.getElementsByTagName("CANVAS");
-    if (cs && cs.length === 1) {
-        const canvas = cs[0];
-        if (canvas.requestFullScreen)
-            canvas.requestFullScreen();
-        else if (canvas.webkitRequestFullScreen)
-            canvas.webkitRequestFullScreen();
-        else if (canvas.mozRequestFullScreen)
-            canvas.mozRequestFullScreen();
-    }
-}
-
-function setup() {
-    createCanvas(img.width, img.height);
-
-    bColor = getAverageColor();
-
-    button = createButton('fullscreen');
-    button.mousePressed(goFullScreen);
-
-
-    let p1 = createVector(1, 1);
-    let p2 = createVector(1, 0);
-    console.log(p5.Vector.angleBetween(p1, p2))
-    console.log(p5.Vector.angleBetween(p2, p1))
-    console.log(p5.Vector.cross(p1, p2))
-    console.log(p5.Vector.cross(p2, p1))
-
-
-    // sqr = new Square(100, 100, (1 / 4) * PI);
-    // sqr.size = 50;
-    // console.log(sqr);
-
-    // testPoint = createVector(80, 80);
-
-    // let s1 = new Square(100, 100, (1 / 4) * PI);
-    // let s2 = new Square(150, 100, (1 / 4) * PI);
-
-    // s1.size = 100;
-    // // s2.size = 100;
-
-    // // squares.push(s1);
-    // // console.log(s2.canGrow(squares));
-
-    // drawSquare(s1);
-    // drawSquare(s2);
-    // noLoop();
-}
-
-function draw() {
-    background(bColor);
-    // testRotatingSquare();
-    //image(img, 0, 0, width,height);
-
-    let sqr;
-
-    if (fails < maxFails) {
-        for (let i = 0; i < 25; i++) {
-            sqr = new Square(random(0, width), random(0, height), random(0, 2 * PI));
-            if (sqr.canGrow(squares)) {
-                sqr.color = getImageColorAtPoint(img, sqr.pos);
-                squares.push(sqr);
-                fails = 0;
-                // console.log(sqr);
-            }
-            else {
-                fails++;
-            }
-        }
-
-    }
-    else {
-        noLoop();
-        console.log("too many fails");
-    }
-
-    for (let i = 0; i < squares.length; i++) {
-        drawSquare(squares[i]);
-        squares[i].grow(squares);
-    }
-
-    // console.log(`There are ${squares.length} squares`);
-}
-
-function drawSquare(square) {
-    push();
-    fill(square.color);
-    strokeWeight(1);
-    stroke(0);
-    translate(square.pos.x, square.pos.y);
-    rotate(square.angle);
-    rectMode(CENTER);
-    rect(0, 0, square.size, square.size);
-    pop();
-}
-
-
-function Square(posX, posY, angle) {
-    this.color = color(random(0, 255));
-    this.size = 3;
-    this.pos = createVector(posX, posY);
-    this.angle = angle;
-    this.fullGrown = false;
-
-    this.getDiagonalLength = (nextSize) => {
-        const sz = nextSize || this.size;
-        return sqrt(2) * sz
-    }
-
-    this.a = (nextSize) => {
-        // Vektoren rechnen nicht wie unsere Grafik (umgedrehte y-Achse)
-        const directionFromPos = p5.Vector.fromAngle((5 / 4) * PI + this.angle);
-        const directionMag = this.getDiagonalLength(nextSize) / 2;
-        const posToPoint = p5.Vector.mult(directionFromPos, directionMag);
-
-        // console.log(directionFromPos );
-        // console.log(directionMag);
-        // console.log(posToPoint);
-
-        return p5.Vector.add(this.pos, posToPoint);
-    }
-
-    this.b = (nextSize) => {
-        const directionFromPos = p5.Vector.fromAngle((7 / 4) * PI + this.angle);
-        const directionMag = this.getDiagonalLength(nextSize) / 2;
-        const posToPoint = p5.Vector.mult(directionFromPos, directionMag);
-
-        return p5.Vector.add(this.pos, posToPoint);
-    }
-
-    this.c = (nextSize) => {
-        const directionFromPos = p5.Vector.fromAngle((1 / 4) * PI + this.angle);
-        const directionMag = this.getDiagonalLength(nextSize) / 2;
-        const posToPoint = p5.Vector.mult(directionFromPos, directionMag);
-
-        return p5.Vector.add(this.pos, posToPoint);
-    }
-
-    this.d = (nextSize) => {
-        const directionFromPos = p5.Vector.fromAngle((3 / 4) * PI + this.angle);
-        const directionMag = this.getDiagonalLength(nextSize) / 2;
-        const posToPoint = p5.Vector.mult(directionFromPos, directionMag);
-
-        return p5.Vector.add(this.pos, posToPoint);
-    }
-
-    this.pointIsInSquare = (vectorToPoint, nextSize) => {
-        let distanceToAB = p5.Vector.cross(
-            p5.Vector.fromAngle(this.angle),
-            p5.Vector.sub(vectorToPoint,
-                this.a(nextSize)));
-
-        if (distanceToAB.z < 0 || distanceToAB.z > nextSize) {
-            return false;
-        }
-
-        let distanceToBC = p5.Vector.cross(
-            p5.Vector.fromAngle(this.angle + (1 / 2) * PI),
-            p5.Vector.sub(vectorToPoint,
-                this.b(nextSize)));
-
-        if (distanceToBC.z < 0 || distanceToBC.z > nextSize) {
-            return false;
-        }
-
-        let distanceToCD = p5.Vector.cross(
-            p5.Vector.fromAngle(this.angle + PI),
-            p5.Vector.sub(vectorToPoint,
-                this.c(nextSize)));
-
-        // console.log(distanceToCD);
-
-        if (distanceToCD.z < 0 || distanceToCD.z > nextSize) {
-            return false;
-        }
-
-        let distanceToDA = p5.Vector.cross(
-            p5.Vector.fromAngle(this.angle + (3 / 2) * PI),
-            p5.Vector.sub(vectorToPoint,
-                this.d(nextSize)));
-
-        if (distanceToDA.z < 0 || distanceToDA.z > nextSize) {
-            return false;
-        }
-
-        return distanceToAB.z >= 0 && distanceToBC.z >= 0 && distanceToCD.z >= 0 && distanceToDA.z >= 0;
-    }
-
-    this.grow = (squares) => {
-        if (!this.fullGrown) {
-            if (this.canGrow(squares)) {
-                this.size += growFactor;
-            }
-            else {
-                this.fullGrown = true;
-            }
-        }
-
-    }
-
-    this.canGrow = (squares) => {
-        for (let i = 0; i < squares.length; i++) {
-            let sqr = squares[i];
-            if (sqr !== this) {
-                let dist = sqr.pos.dist(this.pos);
-                let nextSize = (this.size + growFactor) + minDistance;
-
-                if (dist < (sqr.size + nextSize) / 2) {
-                    return false;
-                }
-
-                if (dist < sqrt(2) * (sqr.size + nextSize) ) {
-                    let noOverlapping = !this.pointIsInSquare(sqr.a(), nextSize) &&
-                        !this.pointIsInSquare(sqr.b(), nextSize) &&
-                        !this.pointIsInSquare(sqr.c(), nextSize) &&
-                        !this.pointIsInSquare(sqr.d(), nextSize) &&
-                        !sqr.pointIsInSquare(this.a(nextSize)) &&
-                        !sqr.pointIsInSquare(this.b(nextSize)) &&
-                        !sqr.pointIsInSquare(this.c(nextSize)) &&
-                        !sqr.pointIsInSquare(this.d(nextSize));
-
-                    if (!noOverlapping) {
-                        return noOverlapping;
-                    }
-                }
-            }
-        }
-        // console.log(squares)
-        return true;
-    };
-}
-
-
-
-function testRotatingSquare() {
-    // sqr.angle += 0.01;
-    // drawSquare(sqr);
-
-    // stroke(0, 2);
-    // fill(255, 0, 255);
-    // let a = sqr.a();
-    // let b = sqr.b();
-    // let c = sqr.c();
-    // let d = sqr.d();
-
-    // textSize(24);
-    // text("A", a.x, a.y);
-    // text("B", b.x, b.y);
-    // text("C", c.x, c.y);
-    // text("D", d.x, d.y);
-
-    // // console.log(a);
-    // // console.log(b);
-    // // console.log(c);
-    // // console.log(d);
-
-    // console.log(sqr.pointIsInSquare(testPoint));
-    // ellipse(testPoint.x, testPoint.y, 10);
-
 
 }

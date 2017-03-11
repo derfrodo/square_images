@@ -17,9 +17,9 @@ https://www.dortmund.de/de/leben_in_dortmund/medienportal/fotos/fotopool/index.h
 01Lichtshow4 
 Bildnachweis: Soeren Spoo, Dortmund-Agentur, Stadt Dortmund
 
-DortmundPanorama
+DortmundPanorama (sowie Skalierungen wie DortmundPanorama_600)
 Bildnachweis: Soeren Spoo, Dortmund-Agentur, Stadt Dortmund
 
-DSC_1586 (sowie skalierung: DSC_1586_600)
+DSC_1586 (sowie skalierungen wie DSC_1586_600)
 Foto: Stefanie Kleemann, Dortmund-Agentur
  
