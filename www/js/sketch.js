@@ -2,7 +2,7 @@
 Denke beim Zeichnen an die "invertierte" y-Achse
  */
 
-const minDistance = 3;
+const minDistance = 1;
 const growFactor = 1;
 
 let fails = 0;
@@ -29,6 +29,8 @@ function setup() {
 
     bColor = getAverageColor();
     addCanvasFullscreenButton();
+
+    fillImage(100);
 }
 
 function draw() {
@@ -53,18 +55,19 @@ function draw() {
     // s1.grow(squares);
     // s2.grow(squares);
 
-    fillImage() ;
+    fillImage(25);
 }
 
 
-function fillImage() {
+function fillImage(iterations) {
     image(img, 0, 0);
     background(0, 100);
 
     let sqr;
 
     if (fails < maxFails) {
-        for (let i = 0; i < 25; i++) {
+        iterations = iterations || 1;
+        for (let i = 0; i < iterations; i++) {
             sqr = new Square(random(0, width), random(0, height), random(0, 2 * PI));
             if (sqr.canGrow(squares)) {
                 sqr.color = getImageColorAtPoint(img, sqr.pos);
