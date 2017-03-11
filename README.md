@@ -23,3 +23,15 @@ Bildnachweis: Soeren Spoo, Dortmund-Agentur, Stadt Dortmund
 DSC_1586 (sowie skalierungen wie DSC_1586_600)
 Foto: Stefanie Kleemann, Dortmund-Agentur
  
+ Apfel von 
+ https://pixabay.com/de/apple-bildung-schule-wissen-%C3%A4pfel-256267/
+
+ Golden Retriever von
+
+https://pixabay.com/de/welpe-golden-retriever-hund-1207818/
+
+https://pixabay.com/de/tierfotografie-hundefotografie-hund-1551698/
+    
+https://pixabay.com/de/welpen-hund-golden-retriever-g%C3%A4hnen-1871263/
+
+https://pixabay.com/de/strand-retriever-s%C3%BC%C3%9F-putzig-albern-750591/

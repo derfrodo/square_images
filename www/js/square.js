@@ -14,7 +14,7 @@ function drawSquare(square) {
 
 function Square(posX, posY, angle) {
     this.color = color(random(0, 255));
-    this.size = 3;
+    this.size = 5;
     this.pos = createVector(posX, posY);
     this.angle = angle;
     this.fullGrown = false;
@@ -78,12 +78,18 @@ function Square(posX, posY, angle) {
     }
 
     this.canGrow = (squares) => {
+        let nextSize = (this.size + growFactor);
+
+        if (maxSize > 0 && nextSize >= maxSize) {
+            return false;
+        }
+
+
         squares = squares || [];
         for (let i = 0; i < squares.length; i++) {
             let sqr = squares[i];
             if (sqr !== this) {
                 let dist = sqr.pos.dist(this.pos);
-                let nextSize = (this.size + growFactor);
 
                 if (dist < (sqr.size + nextSize) / 2) {
                     return false;

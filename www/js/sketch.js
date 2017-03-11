@@ -3,6 +3,7 @@ Denke beim Zeichnen an die "invertierte" y-Achse
  */
 
 const minDistance = 1;
+const maxSize=15;
 const growFactor = 1;
 
 let fails = 0;
@@ -16,7 +17,9 @@ var img;
 var testPoint;
 
 function preload() {
-    img = loadImage("assets/DortmundPanorama_600.jpg");
+    // img = loadImage("assets/DortmundPanorama_600.jpg");
+    // img = loadImage("assets/DSC_1586_600.jpg");
+    img = loadImage("assets/dog-1551698_960_720.jpg");
 }
 
 // var sqr;
@@ -30,7 +33,7 @@ function setup() {
     bColor = getAverageColor();
     addCanvasFullscreenButton();
 
-    fillImage(100);
+    fillImage(1000);
 }
 
 function draw() {
@@ -60,8 +63,9 @@ function draw() {
 
 
 function fillImage(iterations) {
-    image(img, 0, 0);
-    background(0, 100);
+    // image(img, 0, 0);
+    // background(0, 100);
+    background(0);
 
     let sqr;
 
