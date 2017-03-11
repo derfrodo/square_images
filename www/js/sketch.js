@@ -8,6 +8,8 @@ const growFactor = 0.3;
 let fails = 0;
 const maxFails = 100;
 
+var bColor = 0;
+
 
 var squares = [];
 var img;
@@ -16,7 +18,33 @@ var testPoint;
 
 function preload() {
     img = loadImage("assets/image600.jpg");
+}
+
+function getAverageColor() {
+    
     img.loadPixels();
+    let pixels = img.pixels;
+    let pixelCount = floor(pixels.length / 4)
+
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    let a = 0;
+
+    for (let i = 0; i < pixelCount; i++) {
+        let idx = i * 4;
+        r += pixels[idx] / 255;
+        g += pixels[idx + 1] / 255;
+        b += pixels[idx + 2] / 255;
+        a += pixels[idx + 3] / 255;
+    }
+
+    r = floor((r / pixelCount) * 255);
+    g = floor((g / pixelCount) * 255);
+    b = floor((b / pixelCount) * 255);
+    a = floor((a / pixelCount) * 255);
+
+    return color(r, g, b, a)
 }
 
 function getImageColorAtPoint(img, vectorToPoint) {
@@ -69,6 +97,8 @@ function setup() {
     const factor = img.width / 16;
     createCanvas(16 * factor, 9 * factor);
 
+    bColor = getAverageColor();
+
     button = createButton('fullscreen');
     button.mousePressed(goFullScreen);
 
@@ -85,24 +115,24 @@ function setup() {
     // sqr.size = 50;
     // console.log(sqr);
 
-    testPoint = createVector(80, 80);
+    // testPoint = createVector(80, 80);
 
-    let s1 = new Square(100, 100, (1 / 4) * PI);
-    let s2 = new Square(150, 100, (1 / 4) * PI);
+    // let s1 = new Square(100, 100, (1 / 4) * PI);
+    // let s2 = new Square(150, 100, (1 / 4) * PI);
 
-    s1.size = 100;
-    // s2.size = 100;
+    // s1.size = 100;
+    // // s2.size = 100;
 
-    // squares.push(s1);
-    // console.log(s2.canGrow(squares));
+    // // squares.push(s1);
+    // // console.log(s2.canGrow(squares));
 
-    drawSquare(s1);
-    drawSquare(s2);
+    // drawSquare(s1);
+    // drawSquare(s2);
     // noLoop();
 }
 
 function draw() {
-    background(255);
+    background(bColor);
     // testRotatingSquare();
     //image(img, 0, 0, width,height);
 
