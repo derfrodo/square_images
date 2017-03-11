@@ -12,6 +12,7 @@ const maxFails = 100;
 var squares = [];
 var img;
 
+var testPoint;
 
 function preload() {
     img = loadImage("assets/image600.jpg");
@@ -37,7 +38,7 @@ function setup() {
     sqr.size = 50;
     console.log(sqr);
 
-
+    testPoint = createVector(80, 80);
     //noLoop();
 }
 
@@ -64,7 +65,8 @@ function draw() {
     // console.log(c);
     // console.log(d);
 
-    console.log(sqr.pointIsInSquare(createVector(1, 1)));
+    console.log(sqr.pointIsInSquare(testPoint));
+    ellipse(testPoint.x, testPoint.y, 10);
 
     //image(img, 0, 0, width,height);
 
@@ -156,8 +158,48 @@ function Square(posX, posY, angle) {
     }
 
     this.pointIsInSquare = (vectorToPoint, nextSize) => {
-        return p5.Vector.cross(p5.Vector.fromAngle(this.angle),
-            p5.Vector.sub(vectorToPoint, this.a(nextSize)));
+        let distanceToAB = p5.Vector.cross(
+            p5.Vector.fromAngle(this.angle),
+            p5.Vector.sub(vectorToPoint,
+                this.a(nextSize)));
+
+        if (distanceToAB.z < 0 || distanceToAB.z > nextSize) {
+            return false;
+        }
+
+        let distanceToBC = p5.Vector.cross(
+            p5.Vector.fromAngle(this.angle + (1 / 2) * PI),
+            p5.Vector.sub(vectorToPoint,
+                this.b(nextSize)));
+
+        if (distanceToBC.z < 0 || distanceToBC.z > nextSize) {
+            return false;
+        }
+
+        let distanceToCD = p5.Vector.cross(
+            p5.Vector.fromAngle(this.angle + PI),
+            p5.Vector.sub(vectorToPoint,
+                this.c(nextSize)));
+
+        // console.log(distanceToCD);
+
+        if (distanceToCD.z < 0 || distanceToCD.z > nextSize) {
+            return false;
+        }
+
+        let distanceToDA = p5.Vector.cross(
+            p5.Vector.fromAngle(this.angle + (3/2) * PI),
+            p5.Vector.sub(vectorToPoint,
+                this.d(nextSize)));
+
+        // console.log(distanceToDA);
+
+        if (distanceToDA.z < 0|| distanceToDA.z > nextSize) {
+            return false;
+        }
+
+        return distanceToAB.z >= 0 && distanceToBC.z >= 0 && distanceToCD.z >= 0 && distanceToDA.z >= 0;
+
     }
 
     this.grow = (sqares) => {
