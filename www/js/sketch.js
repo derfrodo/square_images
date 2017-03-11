@@ -80,7 +80,6 @@ function setup() {
     console.log(p5.Vector.cross(p1, p2))
     console.log(p5.Vector.cross(p2, p1))
 
-    background(0);
 
     // sqr = new Square(100, 100, (1 / 4) * PI);
     // sqr.size = 50;
@@ -103,7 +102,7 @@ function setup() {
 }
 
 function draw() {
-    background(0);
+    background(255);
     // testRotatingSquare();
     //image(img, 0, 0, width,height);
 
@@ -140,6 +139,8 @@ function draw() {
 function drawSquare(square) {
     push();
     fill(square.color);
+    strokeWeight(1);
+    stroke(0);
     translate(square.pos.x, square.pos.y);
     rotate(square.angle);
     rectMode(CENTER);
