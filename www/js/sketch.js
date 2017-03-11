@@ -52,9 +52,26 @@ function getImageColorAtPoint(img, vectorToPoint) {
 
 // var sqr;
 
+function goFullScreen() {
+    let cs = document.getElementsByTagName("CANVAS");
+    if (cs && cs.length === 1) {
+        const canvas = cs[0];
+        if (canvas.requestFullScreen)
+            canvas.requestFullScreen();
+        else if (canvas.webkitRequestFullScreen)
+            canvas.webkitRequestFullScreen();
+        else if (canvas.mozRequestFullScreen)
+            canvas.mozRequestFullScreen();
+    }
+}
+
 function setup() {
     const factor = img.width / 16;
     createCanvas(16 * factor, 9 * factor);
+
+    button = createButton('fullscreen');
+    button.mousePressed(goFullScreen);
+
 
     let p1 = createVector(1, 1);
     let p2 = createVector(1, 0);
